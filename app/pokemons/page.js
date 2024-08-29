@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import PokemonCard from "../components/PokemonCard";
 
 const getPokemons = async () => {
@@ -10,16 +10,21 @@ const getPokemons = async () => {
 const Pokemons = async () => {
   const pokemons = await getPokemons();
   return (
+    <>
+    <h1 className="text">Pokemons</h1>
     <div className="flex gap-3 flex-wrap">
-      {pokemons.map((pokemon) => (
-        <PokemonCard
-          id={pokemon.id}
-          image={pokemon.image}
-          name={pokemon.name}
-          key={pokemon.id}
-        />
-      ))}
+      <Suspense fallback={<div>Loading!!!!</div>}>
+        {pokemons.map((pokemon) => (
+          <PokemonCard
+            id={pokemon.id}
+            image={pokemon.image}
+            name={pokemon.name}
+            key={pokemon.id}
+          />
+        ))}
+      </Suspense>
     </div>
+    </>  
   );
 };
 

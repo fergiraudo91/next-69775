@@ -1,10 +1,32 @@
 import ProductList from '@/app/components/ProductList';
 import React from 'react';
+import { collection, getDocs, query, where } from 'firebase/firestore';
+import { db } from '@/app/config/firebase';
+
+export const generateStaticsParams = () => {
+  return [
+    {category: 'gaming'},
+    {category: 'electronics'}
+  ]
+}
+
 
 const getProducts = async (category) => {
-    const data = await fetch(`http://localhost:3000/api/productos/${category}`);
-    const products = await data.json();
-    return products;
+    try {
+      const productRef = collection(db, "products");
+      let q;
+      if(category === 'all'){
+        q = query(productRef);
+      }
+      else{
+        q = query(productRef, where('category', '==', category));
+      }
+      const querySnapshots = await getDocs(q);
+      const docs = querySnapshots.docs.map(doc => doc.data());
+      return docs;
+    } catch (error) {
+      
+    }
 }
 
 const Products = async ({params}) => {

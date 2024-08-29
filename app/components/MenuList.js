@@ -45,7 +45,7 @@ const MenuList = ({ open, setOpen }) => {
             Tienda
           </Link>
           <Link
-            href="/productos"
+            href="/productos/all"
             className="text-white p-2"
             onClick={(e) => {
               e.stopPropagation();
