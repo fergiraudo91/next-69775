@@ -2,7 +2,10 @@ import React, { Suspense } from "react";
 import PokemonCard from "../components/PokemonCard";
 
 const getPokemons = async () => {
-  const pokemons = await fetch("http://localhost:3000/api/pokemons");
+  const baseUrl = process.env.VERCEL_URL 
+  ? `https://${process.env.VERCEL_URL}` 
+  : 'http://localhost:3000';
+  const pokemons = await fetch(`${baseUrl}/api/pokemons`);
   const result = await pokemons.json();
   return result;
 };
