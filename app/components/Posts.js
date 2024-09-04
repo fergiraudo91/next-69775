@@ -16,8 +16,8 @@ const Posts = async () => {
     <div>
       <h1 className="text-lg">Posts</h1>
       <ul>
-        {posts.map((post) => (
-          <Link href={`/post/${post.id}`}>
+        {posts.map((post, index) => (
+          <Link href={`/post/${post.id}`} key={index}>
             <li>
               {" "}
               {post.id} - {post.title}

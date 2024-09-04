@@ -58,10 +58,9 @@ const ProductDetail = () => {
               {singleProduct?.price}
             </span>
             <Button
-              children={"Agregar al carrito"}
               className="p-3"
               onClick={() => addToCart(singleProduct)}
-            />
+            >Agregar al carrito</Button>
           </div>
         </div>
       )}

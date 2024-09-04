@@ -7,8 +7,8 @@ const Carrito = () => {
   return (
     <>
       <h1>Carrito</h1>
-      {cart.map((item) => (
-        <h2>
+      {cart.map((item, index) => (
+        <h2 key={index}>
           {item.title} - ${item.price}
         </h2>
       ))}
