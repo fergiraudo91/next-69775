@@ -38,22 +38,22 @@ const loginUser = async (values) => {
 
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      if (user) {
-        setUser({
-          logged: true,
-          email: user.email,
-          uid: user.uid,
-        });
-      } else {
-        setUser({
-          logged: false,
-          email: null,
-          uid: null,
-        });
-      }
-    });
-    return () => unsubscribe();
+    // const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    //   if (user) {
+    //     setUser({
+    //       logged: true,
+    //       email: user.email,
+    //       uid: user.uid,
+    //     });
+    //   } else {
+    //     setUser({
+    //       logged: false,
+    //       email: null,
+    //       uid: null,
+    //     });
+    //   }
+    // });
+    // return () => unsubscribe();
   }, []);
 
   return (

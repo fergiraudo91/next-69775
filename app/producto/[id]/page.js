@@ -1,48 +1,31 @@
-"use client";
 import Button from "@/app/components/Button";
 import { db } from "@/app/config/firebase";
-import { useCartContext } from "@/app/context/CartContext";
 import mockData from "@/data/mockData";
 import { collection, getDocs, query, where } from "firebase/firestore";
-import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-const ProductDetail = () => {
-  const { id } = useParams();
-  const [loading, setLoading] = useState(false);
-  const [singleProduct, setSingleProduct] = useState(null);
-  const { addToCart } = useCartContext();
-
-  const getProduct = async (id) => {
-    try {
-      const productsRef = collection(db, "products");
-      const q = query(productsRef, where("id", "==", parseInt(id)));
-      const querySnapshot = await getDocs(q);
-      if (!querySnapshot.empty) {
-        return querySnapshot.docs[0].data();
-      } else {
-        return [];
-      }
-    } catch (error) {
+const getProduct = async (id) => {
+  try {
+    const productsRef = collection(db, "products");
+    const q = query(productsRef, where("id", "==", parseInt(id)));
+    const querySnapshot = await getDocs(q);
+    if (!querySnapshot.empty) {
+      return querySnapshot.docs[0].data();
+    } else {
       return [];
     }
-  };
+  } catch (error) {
+    return [];
+  }
+};
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      setLoading(true);
-      const product = await getProduct(id);
-      setSingleProduct(product);
-      setLoading(false);
-    };
-    fetchProducts();
-  }, [id]);
+const ProductDetail = async ({params}) => {
+  const { id } = params;
+
+  const singleProduct = getProduct(id);
 
   return (
     <>
-      {loading ? (
-        <h1>Loading...</h1>
-      ) : (
         <div className="max-w-sm rounded overflow-hidden shadow-lg m-4">
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">{singleProduct?.title}</div>
@@ -63,7 +46,6 @@ const ProductDetail = () => {
             >Agregar al carrito</Button>
           </div>
         </div>
-      )}
     </>
   );
 };
